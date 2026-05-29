@@ -114,7 +114,7 @@ const certifications = [
 
 const experiences = [
   {
-    company: "Mindata · Spain",
+    company: "Mindata · Spain (Remote)",
     role: "Data & Analytics Engineer",
     period: "2026 - Present",
     description:
@@ -216,10 +216,14 @@ export default function Home() {
 
         <nav className="flex justify-between items-center mb-24">
 
-          <div>
-            <p className="uppercase tracking-[0.35em] text-sm opacity-60">
-              Diego Bouzada
-            </p>
+        <div>
+        <p className="uppercase tracking-[0.35em] text-sm opacity-60">
+           Diego Bouzada
+          </p>
+
+          <p className="text-sm opacity-60 mt-2">
+            🇦🇷 Argentina • Data & Analytics Engineer • LATAM & Europe Experience
+           </p>
           </div>
 
           <div className="flex items-center gap-6">
