@@ -1,344 +1,396 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import Particles from "react-tsparticles";
+import { loadSlim } from "tsparticles-slim";
 
-const content = {
+import {
+  FaGithub,
+  FaLinkedin,
+  FaMoon,
+  FaSun,
+} from "react-icons/fa";
+
+const translations = {
   es: {
-    badge: "Analytics Engineering · Automation · Cloud Systems",
+    badge: "Disponible para oportunidades remotas Data & AI",
 
     title: "Data & Analytics Engineer",
 
     subtitle:
-      "Automatización de procesos, arquitecturas cloud y soluciones analytics end-to-end.",
-
-    aboutTitle: "Sobre mí",
+      "Automatización, plataformas cloud y sistemas analytics potenciados con IA.",
 
     about:
-      "Ingeniero de Datos & Analytics con experiencia en fintech, healthtech y productos digitales LATAM. Especializado en automatización, ETL pipelines, cloud analytics, APIs y ecosistemas modernos de datos orientados a negocio.",
+      "Data & Analytics Engineer con experiencia en fintech, analytics y productos digitales LATAM. Especializado en arquitecturas cloud-native, pipelines ETL, automatización, APIs y workflows con IA.",
 
-    metrics: [
-      {
-        value: "40+",
-        label: "Automatizaciones",
-      },
-      {
-        value: "100+",
-        label: "Dashboards",
-      },
-      {
-        value: "15+",
-        label: "APIs Integradas",
-      },
-      {
-        value: "LATAM",
-        label: "Experiencia Regional",
-      },
-    ],
+    globalTitle:
+      "Trabajando con sistemas analytics cloud-native en LATAM y Europa.",
 
-    systemsTitle: "Lo que construyo",
+    globalDesc:
+      "Enfocado en ecosistemas de datos escalables, arquitecturas automation-first y soluciones impulsadas por IA.",
 
-    systems: [
-      {
-        title: "Analytics Platforms",
-        description:
-          "Dashboards ejecutivos, KPIs y ecosistemas de Business Intelligence.",
-      },
-      {
-        title: "Cloud Pipelines",
-        description:
-          "ETLs escalables y arquitecturas cloud modernas orientadas a analytics.",
-      },
-      {
-        title: "AI Workflows",
-        description:
-          "Automatizaciones con APIs, IA y procesos operacionales.",
-      },
-      {
-        title: "Data Automation",
-        description:
-          "Monitoreo, automatización de refreshes y optimización de reporting.",
-      },
-    ],
-
-    experienceTitle: "Experiencia",
-
+    services: "Servicios",
+    experience: "Experiencia",
+    certifications: "Certificaciones",
     architecture: "Arquitectura",
+    contact: "Contacto",
 
-    architectureDescription:
-      "Diseño ecosistemas analytics escalables conectando APIs, pipelines cloud y decisiones de negocio.",
-
-    footer: "Data & Analytics Engineer",
+    contactButton: "Enviar Mensaje",
   },
 
   en: {
-    badge: "Analytics Engineering · Automation · Cloud Systems",
+    badge: "Open to remote Data & AI opportunities",
 
     title: "Data & Analytics Engineer",
 
     subtitle:
-      "Process automation, cloud architectures and end-to-end analytics solutions.",
-
-    aboutTitle: "About Me",
+      "Automation, cloud platforms and AI-powered analytics systems.",
 
     about:
-      "Data & Analytics Engineer with experience across fintech, healthtech and LATAM digital products. Specialized in automation, ETL pipelines, cloud analytics, APIs and modern business-oriented data ecosystems.",
+      "Data & Analytics Engineer with experience across fintech, analytics and LATAM digital products. Specialized in cloud-native architectures, ETL pipelines, automation, APIs and AI workflows.",
 
-    metrics: [
-      {
-        value: "40+",
-        label: "Automated Workflows",
-      },
-      {
-        value: "100+",
-        label: "Dashboards",
-      },
-      {
-        value: "15+",
-        label: "Integrated APIs",
-      },
-      {
-        value: "LATAM",
-        label: "Regional Experience",
-      },
-    ],
+    globalTitle:
+      "Working with cloud-native analytics systems across LATAM and Europe.",
 
-    systemsTitle: "What I Build",
+    globalDesc:
+      "Focused on scalable data ecosystems, automation-first architectures and AI-powered workflows.",
 
-    systems: [
-      {
-        title: "Analytics Platforms",
-        description:
-          "Executive dashboards, KPI ecosystems and business intelligence solutions.",
-      },
-      {
-        title: "Cloud Pipelines",
-        description:
-          "Scalable ETLs and modern cloud-first analytics architectures.",
-      },
-      {
-        title: "AI Workflows",
-        description:
-          "Automation systems integrating APIs, AI and operational processes.",
-      },
-      {
-        title: "Data Automation",
-        description:
-          "Monitoring systems, refresh automation and reporting optimization.",
-      },
-    ],
-
-    experienceTitle: "Experience",
-
+    services: "Services",
+    experience: "Experience",
+    certifications: "Certifications",
     architecture: "Architecture",
+    contact: "Contact",
 
-    architectureDescription:
-      "Designing scalable analytics ecosystems connecting APIs, cloud pipelines and business decisions.",
-
-    footer: "Data & Analytics Engineer",
+    contactButton: "Send Message",
   },
 };
 
+const stack = [
+  "BigQuery",
+  "Power BI",
+  "Python",
+  "Tableau",
+  "Azure",
+  "Fabric",
+  "dbt",
+  "SQL",
+  "APIs",
+  "n8n",
+];
+
+const services = [
+  "Analytics Engineering",
+  "Cloud Data Platforms",
+  "AI Automation",
+  "Business Intelligence",
+  "ETL & Pipelines",
+  "API Integrations",
+];
+
+const certifications = [
+  {
+    title: "Microsoft Certified: Fabric Analytics Engineer Associate",
+    issuer: "Microsoft",
+    year: "2024",
+  },
+  {
+    title: "dbt Fundamentals",
+    issuer: "dbt Labs",
+    year: "2026",
+  },
+  {
+    title: "AI Automation",
+    issuer: "Coderhouse",
+    year: "2026",
+  },
+  {
+    title: "Data Analysis with Python",
+    issuer: "IBM",
+    year: "2022",
+  },
+];
+
 const experiences = [
   {
-    company: "Mindata",
+    company: "Mindata · Spain",
     role: "Data & Analytics Engineer",
-    period: "2026 - Actualidad",
+    period: "2026 - Present",
     description:
-      "Automatización de procesos, APIs, analytics engineering y soluciones cloud orientadas a negocio.",
+      "Cloud analytics, automation workflows, APIs and AI-driven business solutions.",
   },
-    {
+  {
     company: "Quales Group",
     role: "Data AI Engineer",
     period: "2025 - 2026",
     description:
-      "Automatizaciones IA, workflows analytics y soluciones modernas de datos.",
+      "AI automations, analytics pipelines and modern data solutions.",
   },
   {
     company: "Mercado Libre",
     role: "Data & Analytics Engineer",
     period: "2024 - 2025",
     description:
-      "Desarrollo de pipelines BigQuery, Tableau analytics y soluciones regionales Seller Experience LATAM.",
+      "Regional analytics for Seller Experience LATAM using BigQuery and Tableau.",
   },
-
-   {
-    company: "Inteligencia Ana",
-    role: "BI Developer",
-    period: "2023 - 2024 ",
+  {
+    company: "Inteligencia Analítica",
+    role: "BI & Data Consultant",
+    period: "2023 - 2024",
     description:
-      "Desarrollo de ETLs SSIS, automatización de procesos y dashboards corporativos.",
+      "Business intelligence solutions, dashboards and data modeling.",
   },
   {
     company: "Seidor Analytics",
-    role: "BI & Data Consultant",
+    role: "Data Consultant",
     period: "2023",
     description:
-      "Implementación de soluciones Power BI, modelado de datos y reporting ejecutivo.",
+      "Analytics consulting and enterprise reporting solutions.",
   },
 ];
 
-const stack = [
-  "BigQuery",
-  "Power BI",
-  "Tableau",
-  "Python",
-  "Azure",
-  "Fabric",
-  "dbt",
-  "n8n",
-  "Databricks",
-  "SQL",
-  "Looker",
-  "APIs",
-];
-
 export default function Home() {
-  const [lang, setLang] = useState<"es" | "en">("es");
+  const [dark, setDark] = useState(true);
+  const [lang, setLang] = useState("es");
 
-  const t = content[lang];
+  const t = translations[lang as keyof typeof translations];
+
+  useEffect(() => {
+    document.body.className = dark
+      ? "bg-black text-white"
+      : "bg-white text-black";
+  }, [dark]);
+
+  const particlesInit = async (engine: any) => {
+    await loadSlim(engine);
+  };
 
   return (
-    <main className="min-h-screen bg-black text-white overflow-hidden">
+    <main
+      className={`min-h-screen overflow-hidden transition duration-500 ${
+        dark
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}
+    >
 
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] animate-pulse" />
-      <div className="absolute top-[400px] right-0 w-[500px] h-[500px] bg-violet-500/10 blur-[120px] animate-pulse" />
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          background: {
+            color: {
+              value: dark ? "#000000" : "#ffffff",
+            },
+          },
+          fpsLimit: 60,
+          particles: {
+            number: {
+              value: 45,
+            },
+            color: {
+              value: ["#06b6d4", "#8b5cf6"],
+            },
+            links: {
+              enable: true,
+              color: "#06b6d4",
+              distance: 140,
+              opacity: 0.2,
+            },
+            move: {
+              enable: true,
+              speed: 1,
+            },
+            opacity: {
+              value: 0.3,
+            },
+            size: {
+              value: 2,
+            },
+          },
+        }}
+      />
 
-      <section className="relative max-w-7xl mx-auto px-6 py-10">
+      <section className="relative z-10 max-w-7xl mx-auto px-6 py-10">
 
         <nav className="flex justify-between items-center mb-24">
 
           <div>
-            <p className="uppercase tracking-[0.35em] text-zinc-500 text-sm">
+            <p className="uppercase tracking-[0.35em] text-sm opacity-60">
               Diego Bouzada
             </p>
           </div>
 
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-6">
 
-            <div className="flex gap-3 text-sm">
+            <button
+              onClick={() => setLang(lang === "es" ? "en" : "es")}
+              className="border border-zinc-700 px-3 py-1 rounded-full text-sm hover:border-cyan-400 transition"
+            >
+              {lang === "es" ? "EN" : "ES"}
+            </button>
 
-              <button
-                onClick={() => setLang("es")}
-                className={`transition ${
-                  lang === "es"
-                    ? "text-white"
-                    : "text-zinc-500 hover:text-zinc-300"
-                }`}
-              >
-                ES
-              </button>
+            <button
+              onClick={() => setDark(!dark)}
+              className="text-xl opacity-70 hover:opacity-100 transition"
+            >
+              {dark ? <FaSun /> : <FaMoon />}
+            </button>
 
-              <span className="text-zinc-700">/</span>
+            <a
+              href="https://www.linkedin.com/in/bouzadadiego/"
+              target="_blank"
+              className="hover:text-cyan-400 transition"
+            >
+              <FaLinkedin size={22} />
+            </a>
 
-              <button
-                onClick={() => setLang("en")}
-                className={`transition ${
-                  lang === "en"
-                    ? "text-white"
-                    : "text-zinc-500 hover:text-zinc-300"
-                }`}
-              >
-                EN
-              </button>
-
-            </div>
+            <a
+              href="https://github.com/dbouzada"
+              target="_blank"
+              className="hover:text-cyan-400 transition"
+            >
+              <FaGithub size={22} />
+            </a>
 
           </div>
+
         </nav>
 
+   <motion.section
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1 }}
+  className="mb-36 grid lg:grid-cols-2 gap-20 items-center"
+>
+  <div>
+
+    <div className="inline-flex items-center border border-cyan-500/30 bg-cyan-500/10 px-5 py-2 rounded-full text-sm mb-8 backdrop-blur">
+      {t.badge}
+    </div>
+
+    <h1 className="text-6xl md:text-[110px] font-black leading-[0.9] tracking-tight mb-8">
+      {t.title}
+    </h1>
+
+    <p className="text-cyan-400 text-2xl md:text-3xl max-w-4xl leading-relaxed mb-10">
+      {t.subtitle}
+    </p>
+
+    <p className="max-w-3xl text-lg opacity-70 leading-relaxed mb-12">
+      {t.about}
+    </p>
+
+    <div className="flex flex-wrap gap-4">
+      {stack.map((item) => (
+        <motion.div
+          whileHover={{ y: -5 }}
+          key={item}
+          className="border border-zinc-800 bg-zinc-900/60 px-4 py-2 rounded-full text-sm backdrop-blur"
+        >
+          {item}
+        </motion.div>
+      ))}
+    </div>
+
+  </div>
+
+  <motion.div
+    animate={{ y: [0, -10, 0] }}
+    transition={{
+      duration: 5,
+      repeat: Infinity,
+    }}
+    className="relative flex justify-center"
+  >
+
+    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-violet-500/20 blur-3xl rounded-full scale-90" />
+
+    <div className="relative border border-zinc-800 rounded-[40px] overflow-hidden p-2 bg-zinc-900/50 backdrop-blur-xl shadow-2xl">
+
+      <Image
+        src="/profile.jpg"
+        alt="Diego Bouzada"
+        width={300}
+        height={500}
+        priority
+        className="rounded-[32px] object-cover"
+      />
+
+    </div>
+
+  </motion.div>
+
+</motion.section>
+
         <section className="mb-36">
 
-          <div className="inline-flex items-center gap-2 border border-zinc-800 bg-zinc-900/60 backdrop-blur px-5 py-2 rounded-full text-sm text-zinc-300 mb-10">
-            {t.badge}
-          </div>
+          <p className="uppercase tracking-[0.3em] opacity-50 text-sm mb-6">
+            Global Experience
+          </p>
 
-          <h1 className="text-6xl md:text-[110px] font-black leading-[0.9] tracking-tight mb-6">
-            {t.title}
-          </h1>
+          <h2 className="text-4xl md:text-6xl font-black leading-tight max-w-5xl mb-10">
 
-          <h2 className="text-2xl md:text-3xl text-cyan-400 font-medium mb-8 max-w-4xl">
-            {t.subtitle}
+            {t.globalTitle}
+
           </h2>
 
-          <div className="flex flex-wrap gap-4">
+          <p className="max-w-3xl text-lg opacity-70 leading-relaxed mb-16">
 
-            {stack.map((item) => (
-              <span
-                key={item}
-                className="border border-zinc-800 bg-zinc-900/50 px-4 py-2 rounded-full text-sm text-zinc-300 hover:border-cyan-500 hover:-translate-y-1 transition duration-300"
-              >
-                {item}
-              </span>
-            ))}
+            {t.globalDesc}
 
-          </div>
+          </p>
 
-        </section>
+          <div className="grid md:grid-cols-4 gap-6">
 
-        <section className="mb-36">
-
-          <div className="border border-zinc-900 rounded-[32px] p-10 bg-zinc-950/40 backdrop-blur">
-
-            <p className="uppercase tracking-[0.3em] text-zinc-500 text-sm mb-6">
-              {t.aboutTitle}
-            </p>
-
-            <p className="text-2xl leading-relaxed text-zinc-300 max-w-5xl">
-              {t.about}
-            </p>
-
-          </div>
-
-        </section>
-
-        <section className="grid md:grid-cols-4 gap-6 mb-36">
-
-          {t.metrics.map((metric) => (
-            <div
-              key={metric.label}
-              className="border border-zinc-900 bg-zinc-900/40 rounded-3xl p-8 hover:border-cyan-500/40 hover:-translate-y-2 transition duration-300"
-            >
-
-              <div className="h-1 w-16 bg-gradient-to-r from-cyan-400 to-violet-500 rounded-full mb-6 animate-pulse" />
-
-              <p className="text-5xl font-bold mb-3">
-                {metric.value}
-              </p>
-
-              <p className="text-zinc-500">
-                {metric.label}
-              </p>
-
-            </div>
-          ))}
-
-        </section>
-
-        <section className="mb-36">
-
-          <h2 className="text-5xl font-bold mb-14">
-            {t.systemsTitle}
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6">
-
-            {t.systems.map((system) => (
-              <div
-                key={system.title}
-                className="group border border-zinc-900 hover:border-cyan-500/40 transition duration-300 rounded-[32px] p-10 bg-gradient-to-b from-zinc-900 to-black hover:-translate-y-2"
+            {[
+              {
+                title: "Cloud Analytics",
+                desc:
+                  lang === "es"
+                    ? "Plataformas modernas de datos y ecosistemas analytics escalables."
+                    : "Modern data platforms and scalable analytics ecosystems.",
+              },
+              {
+                title: "AI Workflows",
+                desc:
+                  lang === "es"
+                    ? "Automatización de sistemas integrando APIs y soluciones IA."
+                    : "Automation systems integrating APIs and AI solutions.",
+              },
+              {
+                title: "Data Platforms",
+                desc:
+                  lang === "es"
+                    ? "BigQuery, Fabric, dbt y arquitecturas BI enterprise."
+                    : "BigQuery, Fabric, dbt and enterprise BI architectures.",
+              },
+              {
+                title: "Business Intelligence",
+                desc:
+                  lang === "es"
+                    ? "Storytelling de datos y dashboards ejecutivos."
+                    : "Data storytelling and executive-level dashboards.",
+              },
+            ].map((item) => (
+              <motion.div
+                whileHover={{ y: -10 }}
+                key={item.title}
+                className="border border-zinc-800 rounded-[32px] p-8 bg-zinc-900/40 backdrop-blur"
               >
 
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 mb-8 animate-pulse" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 mb-8" />
 
-                <h3 className="text-3xl font-bold mb-5">
-                  {system.title}
+                <h3 className="text-2xl font-bold mb-4">
+                  {item.title}
                 </h3>
 
-                <p className="text-zinc-400 leading-relaxed text-lg">
-                  {system.description}
+                <p className="opacity-60 leading-relaxed">
+                  {item.desc}
                 </p>
 
-              </div>
+              </motion.div>
             ))}
 
           </div>
@@ -348,22 +400,51 @@ export default function Home() {
         <section className="mb-36">
 
           <h2 className="text-5xl font-bold mb-14">
-            {t.experienceTitle}
+            {t.services}
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+
+            {services.map((service) => (
+              <motion.div
+                whileHover={{ y: -10 }}
+                key={service}
+                className="border border-zinc-800 rounded-[32px] p-10 bg-gradient-to-b from-zinc-900 to-black"
+              >
+
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 mb-8" />
+
+                <h3 className="text-2xl font-bold leading-snug">
+                  {service}
+                </h3>
+
+              </motion.div>
+            ))}
+
+          </div>
+
+        </section>
+
+        <section className="mb-36">
+
+          <h2 className="text-5xl font-bold mb-14">
+            {t.experience}
           </h2>
 
           <div className="space-y-8">
 
             {experiences.map((job) => (
-              <div
+              <motion.div
+                whileHover={{ x: 10 }}
                 key={job.company}
-                className="relative border border-zinc-900 hover:border-violet-500/40 transition duration-300 rounded-[32px] p-10 bg-zinc-950/40 hover:-translate-y-1"
+                className="relative border border-zinc-800 rounded-[32px] p-10 bg-zinc-900/40 backdrop-blur"
               >
 
-                <div className="absolute left-0 top-10 bottom-10 w-[2px] bg-gradient-to-b from-cyan-500 to-violet-500 rounded-full animate-pulse" />
+                <div className="absolute left-0 top-10 bottom-10 w-[2px] bg-gradient-to-b from-cyan-400 to-violet-500 rounded-full" />
 
                 <div className="pl-8">
 
-                  <p className="text-zinc-500 text-sm mb-3">
+                  <p className="opacity-50 text-sm mb-3">
                     {job.period}
                   </p>
 
@@ -371,17 +452,17 @@ export default function Home() {
                     {job.role}
                   </h3>
 
-                  <p className="text-cyan-400 text-lg mb-6">
+                  <p className="text-cyan-400 text-lg mb-5">
                     {job.company}
                   </p>
 
-                  <p className="text-zinc-400 text-lg leading-relaxed max-w-3xl">
+                  <p className="opacity-70 leading-relaxed max-w-3xl">
                     {job.description}
                   </p>
 
                 </div>
 
-              </div>
+              </motion.div>
             ))}
 
           </div>
@@ -390,29 +471,68 @@ export default function Home() {
 
         <section className="mb-36">
 
-          <div className="border border-zinc-900 rounded-[40px] p-12 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden">
+          <h2 className="text-5xl font-bold mb-14">
+            {t.certifications}
+          </h2>
 
-            <div className="absolute inset-0 opacity-10">
+          <div className="grid md:grid-cols-2 gap-6">
 
-              <div className="absolute top-10 left-10 w-40 h-[2px] bg-cyan-400 animate-pulse" />
-              <div className="absolute top-24 left-52 w-40 h-[2px] bg-violet-400 animate-pulse" />
-              <div className="absolute top-40 left-96 w-40 h-[2px] bg-cyan-400 animate-pulse" />
-              <div className="absolute top-56 left-[600px] w-40 h-[2px] bg-violet-400 animate-pulse" />
+            {certifications.map((cert) => (
+              <motion.div
+                whileHover={{ y: -8 }}
+                key={cert.title}
+                className="border border-zinc-800 rounded-[32px] p-8 bg-zinc-900/40"
+              >
+
+                <p className="text-cyan-400 mb-4">
+                  {cert.issuer}
+                </p>
+
+                <h3 className="text-2xl font-bold mb-3">
+                  {cert.title}
+                </h3>
+
+                <p className="opacity-60">
+                  {cert.year}
+                </p>
+
+              </motion.div>
+            ))}
+
+          </div>
+
+        </section>
+
+        <section className="mb-36">
+
+          <div className="border border-zinc-800 rounded-[40px] p-12 bg-gradient-to-br from-zinc-900 to-black relative overflow-hidden">
+
+            <div className="absolute inset-0 opacity-20">
+
+              <div className="absolute top-16 left-10 w-40 h-[2px] bg-cyan-400" />
+              <div className="absolute top-32 left-56 w-40 h-[2px] bg-violet-400" />
+              <div className="absolute top-48 left-96 w-40 h-[2px] bg-cyan-400" />
 
             </div>
 
             <div className="relative">
 
-              <p className="uppercase tracking-[0.3em] text-zinc-500 text-sm mb-6">
+              <p className="uppercase tracking-[0.3em] opacity-50 text-sm mb-6">
                 {t.architecture}
               </p>
 
-              <h2 className="text-4xl md:text-6xl font-black leading-tight mb-10">
-                APIs → ETL → BigQuery → dbt → BI → Decisions
+              <h2 className="text-5xl md:text-7xl font-black leading-tight mb-10">
+
+                APIs → ETL → BigQuery → dbt → BI → AI
+
               </h2>
 
-              <p className="text-zinc-400 text-xl max-w-3xl leading-relaxed">
-                {t.architectureDescription}
+              <p className="max-w-3xl text-xl opacity-70 leading-relaxed">
+
+                {lang === "es"
+                  ? "Construyendo ecosistemas analytics escalables conectando cloud, automatización e inteligencia de negocio."
+                  : "Building scalable analytics ecosystems connecting cloud infrastructure, automation and business intelligence."}
+
               </p>
 
             </div>
@@ -421,33 +541,82 @@ export default function Home() {
 
         </section>
 
-        <footer className="border-t border-zinc-900 pt-10 flex flex-col md:flex-row justify-between gap-6 text-zinc-500">
+        <section className="mb-36">
+
+  <div className="border border-zinc-800 rounded-[40px] p-14 bg-gradient-to-br from-zinc-900 to-black text-center relative overflow-hidden">
+
+    <div className="absolute inset-0 opacity-20">
+
+      <div className="absolute top-10 left-20 w-48 h-[1px] bg-cyan-400" />
+      <div className="absolute bottom-16 right-20 w-48 h-[1px] bg-violet-400" />
+
+    </div>
+
+    <div className="relative">
+
+      <p className="uppercase tracking-[0.3em] opacity-50 text-sm mb-6">
+        {lang === "es" ? "Contacto" : "Contact"}
+      </p>
+
+      <h2 className="text-5xl md:text-7xl font-black leading-tight mb-8">
+
+        {lang === "es"
+          ? "Construyamos algo increíble."
+          : "Let's build something amazing."}
+
+      </h2>
+
+      <p className="max-w-2xl mx-auto text-xl opacity-70 leading-relaxed mb-10">
+
+        {lang === "es"
+          ? "Disponible para oportunidades remotas, proyectos de datos, analytics engineering y automatización con IA."
+          : "Available for remote opportunities, analytics engineering, cloud data platforms and AI automation projects."}
+
+      </p>
+
+      <div className="flex justify-center gap-6 flex-wrap">
+
+        <a
+          href="mailto:dbouzada@gmail.com"
+          className="bg-gradient-to-r from-cyan-500 to-violet-500 px-8 py-4 rounded-2xl font-semibold hover:scale-[1.03] transition"
+        >
+          dbouzada@gmail.com
+        </a>
+
+        <a
+          href="https://www.linkedin.com/in/bouzadadiego/"
+          target="_blank"
+          className="border border-zinc-700 px-8 py-4 rounded-2xl hover:border-cyan-400 transition"
+        >
+          LinkedIn
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+        <footer className="border-t border-zinc-900 pt-10 flex flex-col md:flex-row justify-between gap-6 opacity-60">
 
           <p>
-            © 2026 Diego Bouzada · {t.footer}
+            © 2026 Diego Bouzada · Data & Analytics Engineer
           </p>
 
           <div className="flex gap-8">
 
-            <a
-              href="mailto:dbouzada@gmail.com"
-              className="hover:text-white transition"
-            >
+            <a href="mailto:dbouzada@gmail.com">
               Email
             </a>
 
-            <a
-              href="https://linkedin.com"
-              className="hover:text-white transition"
-            >
-              LinkedIn
+            <a href="https://github.com/dbouzada">
+              GitHub
             </a>
 
-            <a
-              href="https://github.com"
-              className="hover:text-white transition"
-            >
-              GitHub
+            <a href="https://www.linkedin.com/in/bouzadadiego/">
+              LinkedIn
             </a>
 
           </div>
@@ -455,6 +624,7 @@ export default function Home() {
         </footer>
 
       </section>
+
     </main>
   );
 }
