@@ -316,8 +316,8 @@ export default function Home() {
       <Image
         src="/profile.jpg"
         alt="Diego Bouzada"
-        width={300}
-        height={500}
+        width={200}
+        height={600}
         priority
         className="rounded-[32px] object-cover"
       />
