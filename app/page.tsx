@@ -118,35 +118,35 @@ const experiences = [
     role: "Data & Analytics Engineer",
     period: "2026 - Present",
     description:
-      "Cloud analytics, automation workflows, APIs and AI-driven business solutions.",
+      "Design and development of cloud-native analytics solutions for international clients. Building data pipelines, API integrations, automation workflows and AI-powered processes using BigQuery, Python, dbt and modern cloud technologies.",
   },
   {
     company: "Quales Group",
     role: "Data AI Engineer",
     period: "2025 - 2026",
     description:
-      "AI automations, analytics pipelines and modern data solutions.",
+      "Development of AI automation solutions integrating LLMs, APIs and business processes. Designed analytics workflows, data pipelines and intelligent automations focused on operational efficiency and decision-making.",
   },
   {
     company: "Mercado Libre",
     role: "Data & Analytics Engineer",
     period: "2024 - 2025",
     description:
-      "Regional analytics for Seller Experience LATAM using BigQuery and Tableau.",
+      "Built and maintained regional analytics solutions for Seller Experience LATAM. Developed scalable data models, ETL processes and executive dashboards using BigQuery, Dataflow, SQL and Tableau to support data-driven decisions.",
   },
   {
     company: "Inteligencia Analítica",
     role: "BI & Data Consultant",
     period: "2023 - 2024",
     description:
-      "Business intelligence solutions, dashboards and data modeling.",
+      "Delivered Business Intelligence projects for multiple clients across different industries. Designed data models, dashboards and reporting solutions using Power BI, SQL and cloud-based analytics platforms.",
   },
   {
     company: "Seidor Analytics",
     role: "Data Consultant",
     period: "2023",
     description:
-      "Analytics consulting and enterprise reporting solutions.",
+      "Participated in enterprise analytics and reporting initiatives, supporting data integration, dashboard development and business performance analysis using Microsoft data technologies.",
   },
 ];
 
