@@ -91,24 +91,22 @@ const services = [
 
 const certifications = [
   {
-    title: "Microsoft Certified: Fabric Analytics Engineer Associate",
+    title: "Fabric Analytics Engineer Associate (DP-600)",
     issuer: "Microsoft",
     year: "2024",
+    link: "https://learn.microsoft.com/en-us/users/dbou/credentials/aaee0b7ba85fb37?ref=https%3A%2F%2Fwww.linkedin.com%2F",
   },
   {
     title: "dbt Fundamentals",
     issuer: "dbt Labs",
     year: "2026",
-  },
-  {
-    title: "AI Automation",
-    issuer: "Coderhouse",
-    year: "2026",
+    link: "https://credentials.getdbt.com/86d4ab40-12fe-48d1-9c0d-eb96e02a6cf6#acc.63Dk7AcW",
   },
   {
     title: "Data Analysis with Python",
     issuer: "IBM",
     year: "2022",
+    link: "https://www.credly.com/badges/4b0aa3d1-2e93-4453-90fe-1de002b96e61/linked_in?t=rji2k3",
   },
 ];
 
@@ -473,39 +471,50 @@ export default function Home() {
 
         </section>
 
+        
         <section className="mb-36">
 
-          <h2 className="text-5xl font-bold mb-14">
-            {t.certifications}
-          </h2>
+  <h2 className="text-5xl font-bold mb-14">
+    {t.certifications}
+  </h2>
 
-          <div className="grid md:grid-cols-2 gap-6">
+  <div className="grid md:grid-cols-3 gap-6">
 
-            {certifications.map((cert) => (
-              <motion.div
-                whileHover={{ y: -8 }}
-                key={cert.title}
-                className="border border-zinc-800 rounded-[32px] p-8 bg-zinc-900/40"
-              >
+    {certifications.map((cert) => (
 
-                <p className="text-cyan-400 mb-4">
-                  {cert.issuer}
-                </p>
+      <motion.a
+        href={cert.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover={{ y: -8 }}
+        key={cert.title}
+        className="border border-zinc-800 rounded-[32px] p-8 bg-zinc-900/40 hover:border-cyan-500 transition block"
+      >
 
-                <h3 className="text-2xl font-bold mb-3">
-                  {cert.title}
-                </h3>
+        <p className="text-cyan-400 mb-4">
+          {cert.issuer}
+        </p>
 
-                <p className="opacity-60">
-                  {cert.year}
-                </p>
+        <h3 className="text-xl font-bold mb-4 leading-snug">
+          {cert.title}
+        </h3>
 
-              </motion.div>
-            ))}
+        <p className="opacity-60 mb-6">
+          {cert.year}
+        </p>
 
-          </div>
+        <span className="text-cyan-400 font-semibold">
+          View Credential →
+        </span>
 
-        </section>
+      </motion.a>
+
+    ))}
+
+  </div>
+
+</section>      
+
 
         <section className="mb-36">
 
