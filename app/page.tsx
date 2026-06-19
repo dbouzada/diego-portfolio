@@ -399,33 +399,26 @@ export default function Home() {
 
         </section>
 
-        <section className="mb-36">
+        <section className="mb-24">
 
-          <h2 className="text-5xl font-bold mb-14">
-            {t.services}
-          </h2>
+  <h2 className="text-3xl font-bold mb-8 opacity-90">
+    {t.services}
+  </h2>
 
-          <div className="grid md:grid-cols-3 gap-6">
+  <div className="flex flex-wrap gap-3">
 
-            {services.map((service) => (
-              <motion.div
-                whileHover={{ y: -10 }}
-                key={service}
-                className="border border-zinc-800 rounded-[32px] p-10 bg-gradient-to-b from-zinc-900 to-black"
-              >
+    {services.map((service) => (
+      <span
+        key={service}
+        className="px-4 py-2 text-sm border border-zinc-800 rounded-full bg-zinc-900/40 hover:border-cyan-400 transition"
+      >
+        {service}
+      </span>
+    ))}
 
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 mb-8" />
+  </div>
 
-                <h3 className="text-2xl font-bold leading-snug">
-                  {service}
-                </h3>
-
-              </motion.div>
-            ))}
-
-          </div>
-
-        </section>
+</section>    
 
         <section className="mb-36">
 
