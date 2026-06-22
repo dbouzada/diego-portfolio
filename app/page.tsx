@@ -11,6 +11,10 @@ import {
   FaLinkedin,
   FaMoon,
   FaSun,
+  FaCloud,
+  FaRobot,
+  FaDatabase,
+  FaChartLine,
 } from "react-icons/fa";
 
 const translations = {
@@ -349,6 +353,7 @@ export default function Home() {
             {[
               {
                 title: "Cloud Analytics",
+                icon: FaCloud,
                 desc:
                   lang === "es"
                     ? "Plataformas modernas de datos y ecosistemas analytics escalables."
@@ -356,6 +361,7 @@ export default function Home() {
               },
               {
                 title: "AI Workflows",
+                icon: FaRobot,
                 desc:
                   lang === "es"
                     ? "Automatización de sistemas integrando APIs y soluciones IA."
@@ -363,6 +369,7 @@ export default function Home() {
               },
               {
                 title: "Data Platforms",
+                icon: FaDatabase,
                 desc:
                   lang === "es"
                     ? "BigQuery, Fabric, dbt y arquitecturas BI enterprise."
@@ -370,6 +377,7 @@ export default function Home() {
               },
               {
                 title: "Business Intelligence",
+                icon: FaChartLine,
                 desc:
                   lang === "es"
                     ? "Storytelling de datos y dashboards ejecutivos."
@@ -377,12 +385,13 @@ export default function Home() {
               },
             ].map((item) => (
               <motion.div
-                whileHover={{ y: -10 }}
                 key={item.title}
                 className="border border-zinc-800 rounded-[32px] p-8 bg-zinc-900/40 backdrop-blur"
               >
 
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 mb-8" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 mb-8 flex items-center justify-center">
+                  <item.icon className="text-cyan-400" size={24} />
+                </div>
 
                 <h3 className="text-2xl font-bold mb-4">
                   {item.title}
@@ -398,27 +407,6 @@ export default function Home() {
           </div>
 
         </section>
-
-        <section className="mb-24">
-
-  <h2 className="text-3xl font-bold mb-8 opacity-90">
-    {t.services}
-  </h2>
-
-  <div className="flex flex-wrap gap-3">
-
-    {services.map((service) => (
-      <span
-        key={service}
-        className="px-4 py-2 text-sm border border-zinc-800 rounded-full bg-zinc-900/40 hover:border-cyan-400 transition"
-      >
-        {service}
-      </span>
-    ))}
-
-  </div>
-
-</section>    
 
         <section className="mb-36">
 
@@ -546,6 +534,27 @@ export default function Home() {
           </div>
 
         </section>
+
+        <section className="mb-24">
+
+  <h2 className="text-3xl font-bold mb-8 opacity-90">
+    {t.services}
+  </h2>
+
+  <div className="flex flex-wrap gap-3">
+
+    {services.map((service) => (
+      <span
+        key={service}
+        className="px-4 py-2 text-sm border border-zinc-800 rounded-full bg-zinc-900/40 hover:border-cyan-400 transition"
+      >
+        {service}
+      </span>
+    ))}
+
+  </div>
+
+</section>
 
         <section className="mb-36">
 
